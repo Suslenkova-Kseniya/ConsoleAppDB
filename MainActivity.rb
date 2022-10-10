@@ -1,4 +1,4 @@
-
+require_relative 'db_connection'
 
 print "Choose the action:\n
 1. Puts user's information
@@ -6,24 +6,25 @@ print "Choose the action:\n
 3. Puts pictures libraries\n
 Print 0 to exit\n"
 
-#dbconnect = DBConnect.new('root', 'ThisIsMyPassword!1', 'Users_Pictures')
-#dbconnect.Connect
-esc = false;
-while !esc
+dbconnect = DBConnection.new('root', 'ThisIsMyPassword!1', 'Users_Pictures')
+dbconnect.connect
+dbconnect.initialize_app
+
+esc = true
+while esc
   action = gets.chomp;
   case action
   when "0"
     puts "Exit?
-        Y-yes N-no\n"
+      Y-yes N-no\n"
     answer = gets.chomp.upcase
-    if answer=="Y" then esc=true
-    end
+    esc=false if (answer=="Y")
   when "1"
-    #dbconnect.GetUsersInfo
+    dbconnect.get_users_info
   when "2"
-    #dbconnect.GetIconInfo
+    dbconnect.get_icon_info
   when "3"
-    #dbconnect.GetPicturesInfo
+    dbconnect.get_pictures_info
   else
     puts "Wrong input, try again, please.\n"
   end
