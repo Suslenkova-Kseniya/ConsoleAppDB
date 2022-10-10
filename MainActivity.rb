@@ -6,7 +6,7 @@ print "Choose the action:\n
 3. Puts pictures libraries\n
 Print 0 to exit\n"
 
-dbconnect = DBConnection.new('root', 'ThisIsMyPassword!1', 'Users_Pictures')
+dbconnect = DBConnection.new('root', 'ThisIsMyPassword!1', 'users_pictures')
 dbconnect.connect
 dbconnect.initialize_app
 
