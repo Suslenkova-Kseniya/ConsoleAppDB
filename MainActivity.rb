@@ -1,3 +1,5 @@
+
+
 print "Choose the action:\n
 1. Puts user's information
 2. Puts avatars
