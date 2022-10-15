@@ -6,25 +6,22 @@ print "Choose the action:\n
 3. Puts pictures libraries\n
 Print 0 to exit\n"
 
-dbconnect = DBConnection.new('root', 'ThisIsMyPassword!1', 'users_pictures')
-dbconnect.connect
-dbconnect.initialize_app
+db_connect = DBConnection.new('pictures_db', 'justuser', 'ThisIsMyPassword!1')
+db_connect.connect
+db_connect.initialize_app
 
 esc = true
 while esc
-  action = gets.chomp;
+  action = gets.chomp
   case action
   when "0"
-    puts "Exit?
-      Y-yes N-no\n"
-    answer = gets.chomp.upcase
-    esc=false if (answer=="Y")
+    esc = false
   when "1"
-    dbconnect.get_users_info
+    db_connect.get_users_info
   when "2"
-    dbconnect.get_icon_info
+    db_connect.get_icon_info
   when "3"
-    dbconnect.get_pictures_info
+    db_connect.get_pictures_info
   else
     puts "Wrong input, try again, please.\n"
   end
