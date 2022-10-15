@@ -19,7 +19,7 @@ class DBConnection
     table_names= %w[user_info personal_info pictures users_pictures]
     table_names.each {|s| table_check(s)}
     table_names.reverse.each { |s| clear_table(s) }
-    table_names.each do |s| s
+    table_names.each do |s|
      file_path = "./resources/#{s}.csv"
      fill_table(file_path, s)
     end
@@ -27,7 +27,7 @@ class DBConnection
 
   def table_check(table)
     result = @client.exec "SELECT EXISTS (SELECT FROM pg_tables WHERE schemaname = 'public'
-   AND tablename = '#{table}');"
+                           AND tablename = '#{table}');"
     result.each do |row|
       if row['exists'] == 'f'
       case table
@@ -47,7 +47,7 @@ class DBConnection
                        fk_pictures_pic_id FOREIGN KEY (pic_id) REFERENCES pictures (pic_id),
                        CONSTRAINT fk_user_info_user_id FOREIGN KEY (user_id) REFERENCES user_info (user_id));"
       end
-    end
+      end
     end
   end
 
@@ -102,39 +102,30 @@ class DBConnection
 
   def get_users_info
     begin
-      results = @client.exec "SELECT ui.email, ui.nickname, pi.first_name, pi.last_name, pi.birth_date,
+      return @client.exec "SELECT ui.email, ui.nickname, pi.first_name, pi.last_name, pi.birth_date,
             pi.sex FROM user_info ui NATURAL JOIN personal_info pi;"
-      results.each do |row|
-        puts row
-      end
-    rescue => exception
-      puts "Exception: #{exception.message}"
+    rescue => e
+      puts "Exception: #{e.message}"
     end
   end
 
   def get_icon_info
     begin
-      results = @client.exec "SELECT ui.email, ui.nickname, up.title, up.create_date, p.url,
+      return @client.exec "SELECT ui.email, ui.nickname, up.title, up.create_date, p.url,
             p.alt_text FROM users_pictures up JOIN user_info ui ON ui.user_id=up.user_id AND
             picture_type='icon' JOIN pictures p ON up.pic_id=p.pic_id;"
-      results.each do |row|
-        puts row
-      end
-    rescue => exception
-      puts "Exception: #{exception.message}"
+    rescue => e
+      puts "Exception: #{e.message}"
     end
   end
 
   def get_pictures_info
     begin
-      results = @client.exec "SELECT ui.email, ui.nickname, up.title, up.create_date, p.url,
+      return @client.exec "SELECT ui.email, ui.nickname, up.title, up.create_date, p.url,
             p.alt_text FROM users_pictures up JOIN user_info ui ON ui.user_id=up.user_id AND
             picture_type='regular' JOIN pictures p ON up.pic_id=p.pic_id;"
-      results.each do |row|
-        puts row
-      end
-    rescue => exception
-      puts "Exception: #{exception}"
+    rescue => e
+      puts "Exception: #{e.message}"
     end
   end
 end
